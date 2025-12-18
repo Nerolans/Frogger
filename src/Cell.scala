@@ -1,3 +1,3 @@
-class Cell (var posX:Int, var posY:Int, var size:Int){
-
+class Cell (var x:Int, var y:Int){
+  var isDangerous:Boolean = false
 }
