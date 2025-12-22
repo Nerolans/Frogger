@@ -35,7 +35,7 @@ object Main extends App{
   }
   display.setKeyManager(e)
 
-  e.
+  //e.
   //if(e.keyPressed(KeyEvent)==KeyEvent.VK_K)println("no way this is working")
 
 
