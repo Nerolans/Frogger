@@ -1,8 +1,9 @@
 import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 
+
 import java.awt.Color
-import java.awt.event.KeyListener
+import java.awt.event.{KeyEvent, KeyListener}
 
 object Main extends App{
   //size of screen
@@ -20,14 +21,41 @@ object Main extends App{
   display.drawPicture(25,25, frogPicture)
 
 
+
+
+
+
+  //KEY LISTENER WORK IN PROGRESS
+  var e:KeyListener = new KeyListener {
+    override def keyTyped(e: KeyEvent): Unit = ???
+
+    override def keyPressed(e: KeyEvent): Unit = ???
+
+    override def keyReleased(e: KeyEvent): Unit = ???
+  }
+  display.setKeyManager(e)
+
+  e.
+  //if(e.keyPressed(KeyEvent)==KeyEvent.VK_K)println("no way this is working")
+
+
+
+
+
+
+
+
+
   //14 * 50
   //cellule 50 50
 
   //var grid: Cell = new Cell()
-  /*for(x<-0 to widthCell){
+  for(x<-0 to widthCell){
     for(y<-0 to heightCell){
       grid(x)(y) = new Cell(x, y)
     }
-  }*/
+  }
+
+
 
 }
