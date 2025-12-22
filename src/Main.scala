@@ -15,22 +15,19 @@ object Main extends App{
   val grid:Array[Array[Cell]] = Array.ofDim(widthCell,heightCell)
   //screen
   val display: FunGraphics = new FunGraphics(GRAPHICS_WIDTH, GRAPHICS_HEIGHT)
-  //frog sprite
-  val frogPicture:GraphicsBitmap = new GraphicsBitmap("C:\\Users\\guigh\\Desktop\\IntelliJ\\Frogger\\res\\frog.png")
+  //frog sprite //WOOOOORKS YEEEES
+  val frogPicture:GraphicsBitmap = new GraphicsBitmap("/frog.png")
+  display.drawPicture(25,25, frogPicture)
 
 
   //14 * 50
   //cellule 50 50
 
   //var grid: Cell = new Cell()
-  for(x<-0 to widthCell){
+  /*for(x<-0 to widthCell){
     for(y<-0 to heightCell){
       grid(x)(y) = new Cell(x, y)
     }
-  }
-
-  display.drawPicture(0,0,frogPicture)
-
-  display.setKeyManager(KeyListener)
+  }*/
 
 }
