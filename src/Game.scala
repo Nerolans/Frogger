@@ -4,6 +4,8 @@ import hevs.graphics.utils.GraphicsBitmap
 import java.awt.event.{KeyEvent, KeyListener}
 
 class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics, var background:GraphicsBitmap, var sizeOfcell:Int) {
+  //check for key release (so that you can't hold down a key)
+  var isReleased: Boolean = true
   //grid of Cell
   val grid:Array[Array[Cell]] = Array.ofDim(sizeX,sizeY)
   for(x<-0 until sizeX){
@@ -29,25 +31,27 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics, var backgroun
       }
 
       override def keyPressed(e: KeyEvent): Unit = {
-        if(e.getKeyChar == 'w' && frog.y > 0) {
+        if(e.getKeyChar == 'w' && frog.y > 0 && isReleased) {
           drawBackground()
           frog.moveForward()
         }
-        if(e.getKeyChar == 's' && frog.y < sizeY-1) {
+        if(e.getKeyChar == 's' && frog.y < sizeY-1 && isReleased) {
           drawBackground()
           frog.moveBackward()
         }
-        if(e.getKeyChar == 'a' && frog.x > 0) {
+        if(e.getKeyChar == 'a' && frog.x > 0 && isReleased) {
           drawBackground()
           frog.moveLeft()
         }
-        if(e.getKeyChar == 'd' && frog.x < sizeX-1) {
+        if(e.getKeyChar == 'd' && frog.x < sizeX-1 && isReleased) {
           drawBackground()
           frog.moveRight()
         }
+        isReleased = false
       }
 
       override def keyReleased(e: KeyEvent): Unit = {
+        isReleased = true
       }
     }
     display.setKeyManager(e)
