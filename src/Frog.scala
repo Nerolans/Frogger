@@ -1,37 +1,36 @@
 import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 
-class Frog(var x:Int, var y:Int, var display:FunGraphics){
+class Frog(var x:Int, var y:Int, var display:FunGraphics, var grid:Array[Array[Cell]]){
+  var frogDirection = "frogW"
   var frogPicture:GraphicsBitmap = new GraphicsBitmap("/frogW.png")
-  def getCoordinates():Array[Int] = {
-    var xCoord:Int = x*50+25
-    var yCoord:Int = y*50+25
-    var arr:Array[Int] = Array(xCoord,yCoord)
 
-    return arr
-  }
 
   def draw(direction:String):Unit = {
     frogPicture = new GraphicsBitmap("/"+direction+".png")
-    display.drawPicture(getCoordinates()(0), getCoordinates()(1) ,frogPicture)
+    display.drawPicture(grid(x)(y).getCoordinates()(0), grid(x)(y).getCoordinates()(1) ,frogPicture)
   }
 
   def moveForward() = {
     if(y>0){
       y-=1
-      draw("frogW")
+      frogDirection = "frogW"
+      draw(frogDirection)
     }
   }
   def moveBackward() = {
     y+=1
-    draw("frogS")
+    frogDirection = "frogS"
+    draw(frogDirection)
   }
   def moveLeft() = {
     x-=1
-    draw("frogA")
+    frogDirection = "frogA"
+    draw(frogDirection)
   }
   def moveRight() = {
     x+=1
-    draw("frogD")
+    frogDirection = "frogD"
+    draw(frogDirection)
   }
 }

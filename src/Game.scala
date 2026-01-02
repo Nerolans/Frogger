@@ -13,6 +13,9 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics, var backgroun
       grid(x)(y) = new Cell(x, y, sizeOfcell)
     }
   }
+  //level
+  var level:Int = 1
+
 
   def drawBackground():Unit = {
     display.drawPicture(sizeX*sizeOfcell/2, sizeY*sizeOfcell/2, background)
@@ -22,8 +25,8 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics, var backgroun
     //display background //values are fixed because it depends on the file size
     drawBackground()
     //frog sprite at base cell
-    var frog:Frog = new Frog(7,13,display)
-    frog.draw("frogW")
+    var frog:Frog = new Frog(7,13,display, grid)
+    frog.draw(frog.frogDirection)
 
     //KEY LISTENER WOOOOOOOOOOOOOOOOOOOOOOOOOOOOORKS
     var e:KeyListener = new KeyListener {
@@ -48,6 +51,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics, var backgroun
           frog.moveRight()
         }
         isReleased = false
+        if(grid(frog.x)(frog.y).isDangerous)gameOver()
       }
 
       override def keyReleased(e: KeyEvent): Unit = {
@@ -55,5 +59,25 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics, var backgroun
       }
     }
     display.setKeyManager(e)
+    //creating ennemy "true" for left, "false" for right
+    var ennemy1:Ennemy = new Ennemy(1,5,true,display,grid)
+
+    //making the ennemy move
+    while (true){
+      var milTimeNow:Long = System.currentTimeMillis()
+      if(milTimeNow - ennemy1.lastMoved > 250){
+        drawBackground()
+        ennemy1.move()
+        frog.draw(frog.frogDirection)
+        ennemy1.draw()
+      }
+      if(grid(frog.x)(frog.y).isDangerous)gameOver()
+
+    }
+  }
+
+  def gameOver() = {
+    //do something here when frog is
+    println("DEAD")
   }
 }
