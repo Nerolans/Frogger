@@ -9,13 +9,11 @@ object Main extends App{
   val GRAPHICS_HEIGHT: Int = 700
   //size of each cell. Is a square (so same size x and y)
   val sizeCell:Int = 50
-  //Background
-  val background:GraphicsBitmap = new GraphicsBitmap("/background.png")
   //Display
   val display: FunGraphics = new FunGraphics(GRAPHICS_WIDTH, GRAPHICS_HEIGHT)
 
   //game ON
-  var game1:Game = new Game(GRAPHICS_WIDTH/sizeCell, GRAPHICS_HEIGHT/sizeCell, display, background, sizeCell)
+  var game1:Game = new Game(GRAPHICS_WIDTH/sizeCell, GRAPHICS_HEIGHT/sizeCell, display,sizeCell)
   println(GRAPHICS_WIDTH/sizeCell)
   game1.play()
 }

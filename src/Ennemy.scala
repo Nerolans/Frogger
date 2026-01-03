@@ -10,17 +10,20 @@ class Ennemy (var x:Int, var y:Int, var direction:Boolean, var display:FunGraphi
   }
 
   def draw() = {
-    display.drawPicture(grid(x)(y).getCoordinates()(0), grid(x)(y).getCoordinates()(1), ennemyPicture)
+    var coordinates:Array[Int] = grid(x)(y).getCoordinatesMiddle()
+    display.drawPicture(coordinates(0), coordinates(1), ennemyPicture)
   }
   def move():Unit = {
     if (direction){
       grid(x)(y).isDangerous = false
+      grid(x)(y).drawBackground()
       x-=1
       if(x<0){x = grid.length-1}
       grid(x)(y).isDangerous = true
     }
     else {
       grid(x)(y).isDangerous = false
+      grid(x)(y).drawBackground()
       x+=1
       if(x>0){x = 0}
       grid(x)(y).isDangerous = true
