@@ -12,4 +12,5 @@ object Main extends App{
   //creating the game and launching it
   var game1:Game = new Game(GRAPHICS_WIDTH/sizeCell, GRAPHICS_HEIGHT/sizeCell, display,sizeCell)
   game1.play()
+  //test
 }
