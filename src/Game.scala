@@ -55,6 +55,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
           isReleased = false
           //checks if the frog hit a car when he moved
           if(grid(frog.x)(frog.y).isDangerous)gameOver()
+          if(frog.y == 0)victory()
         }
       }
 
@@ -84,7 +85,6 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
       }
       //checks if the ennemy has it the frog
       if(grid(frog.x)(frog.y).isDangerous)gameOver()
-
     }
   }
 
@@ -92,5 +92,8 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   def gameOver():Unit = {
     //do something here when frog is
     println("DEAD")
+  }
+  def victory():Unit = {
+    println("bien joué le sang")
   }
 }
