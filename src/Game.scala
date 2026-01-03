@@ -94,6 +94,8 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     println("DEAD")
   }
   def victory():Unit = {
+   //use when y == 0 //
     println("bien joué le sang")
+
   }
 }
