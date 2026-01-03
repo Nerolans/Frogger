@@ -1,7 +1,4 @@
 import hevs.graphics.FunGraphics
-import hevs.graphics.utils.GraphicsBitmap
-import java.awt.Color
-import java.awt.event.{KeyEvent, KeyListener}
 
 object Main extends App{
   //size of screen
