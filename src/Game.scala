@@ -121,6 +121,6 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
 
 
     //checks if the enemy has it the frog
-    if(grid(frog.x)(frog.y).isDangerous)gameOver()
+    //frog.isDead()
   }
 }

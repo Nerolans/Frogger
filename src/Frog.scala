@@ -54,4 +54,10 @@ class Frog(var x:Int, var y:Int, var display:FunGraphics, var grid:Array[Array[C
       draw(frogDirection)
     }
   }
+  def isDead():Boolean = {
+    if(grid(x)(y).isDangerous)true
+    else{
+      false
+    }
+  }
 }
