@@ -1,30 +1,24 @@
 import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 
-class Ennemy (var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics, var grid:Array[Array[Cell]]) {
-  //this stores the last time this ennemy moved
+class Enemy (var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics, var grid:Array[Array[Cell]]) {
+  //this stores the last time this enemy moved
   var lastMoved:Long = System.currentTimeMillis()
   //putting the sprite in a picture (just to have the picture preloaded)
-  var ennemyPicture = new GraphicsBitmap("/ennemyR.png")
+  var enemyPicture = new GraphicsBitmap("/enemyR.png")
   //changing the sprite if it's the other direction
+  var speed:Int = 250
   if(direction){
-    ennemyPicture = new GraphicsBitmap("/ennemyL.png")
+    enemyPicture = new GraphicsBitmap("/enemyL.png")
   }
 
-  //draws the ennemy at the current coordinates
-  def draw():Unit = {
-    //storing the coordinates
-    val coordinates:Array[Int] = grid(x)(y).getCoordinatesMiddle()
-    //drawing the ennemy
-    display.drawPicture(coordinates(0), coordinates(1), ennemyPicture)
-  }
-  //making the ennemy go to the next Cell
+  //making the enemy go to the next Cell
   def move():Unit = {
     //checking the direction
     if (direction){
       //make the old Cell not dangerous anymore
       grid(x)(y).isDangerous = false
-      //the cell draws his background color over the ennemy (deletes the ennemy from the screen)
+      //the cell draws his background color over the enemy (deletes the enemy from the screen)
       grid(x)(y).drawBackground()
       //changes the coordinates
       x-=1
@@ -40,7 +34,11 @@ class Ennemy (var x:Int, var y:Int, var direction:Boolean, var display:FunGraphi
       if(x>0){x = 0}
       grid(x)(y).isDangerous = true
     }
-    //changing the last time this ennemy moved
+    //storing the coordinates
+    val coordinates:Array[Int] = grid(x)(y).getCoordinatesMiddle()
+    //drawing the enemy
+    display.drawPicture(coordinates(0), coordinates(1), enemyPicture)
+    //changing the last time this enemy moved
     lastMoved = System.currentTimeMillis()
   }
 }

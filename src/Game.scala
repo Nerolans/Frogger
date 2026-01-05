@@ -5,6 +5,8 @@ import java.awt.Color
 import java.awt.event.{KeyEvent, KeyListener}
 
 class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell:Int) {
+  //check if the game is on
+  private var isOn:Boolean = true
   //check for key release (so that you can't hold down a key)
   private var isReleased: Boolean = true
   //creating the grid that contains all the Cells with the right size
@@ -65,26 +67,14 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
       }
     }
     display.setKeyManager(e)
-    //creating the ennemies "true" for left, "false" for right -> the number will probably be the same for each level just the speed and direction will change so we may need a function for this
-    var ennemy1:Ennemy = new Ennemy(1,5,true,display,grid)
+    //creating the enemies "true" for left, "false" for right -> the number will probably be the same for each level just the speed and direction will change so we may need a function for this
+    var enemies:Array[Enemy] = createEnemies(5, true, 3, 250)
     //add others
 
 
 
-    //making the ennemies move -> we may need as function for this
-    while (true){
-      //gets The time
-      var milTimeNow:Long = System.currentTimeMillis()
-      //checks if this ennemy hasn't moved for more than a certain value (in ms)
-      if(milTimeNow - ennemy1.lastMoved > 250){
-        //ennemy moves
-        ennemy1.move()
-        //ennemy is drawn
-        ennemy1.draw()
-        //we may move that in a single function
-      }
-      //checks if the ennemy has it the frog
-      if(grid(frog.x)(frog.y).isDangerous)gameOver()
+    while(isOn){
+      moveEnemies(enemies)
     }
   }
 
@@ -92,10 +82,45 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   def gameOver():Unit = {
     //do something here when frog is
     println("DEAD")
+    isOn = false
   }
   def victory():Unit = {
-   //use when y == 0 //ETST
+   //use when y == 0
     println("bien joué le sang")
+    isOn = false
 
+  }
+  //to create the ennemies
+
+  def createEnemies(line:Int, direction:Boolean, distance:Int, speed:Int):Array[Enemy] = {
+    val pop: Int = sizeY / distance
+    val arr:Array[Enemy] = new Array[Enemy](pop)
+    for(i<-0 until pop){
+      if(direction){
+        //TOTEST
+        arr(i) = new Enemy(i*distance,5,direction,display,grid)
+      }
+      else{
+        arr(i) = new Enemy(sizeX-(i*distance),5,direction,display,grid)
+      }
+      arr(i).speed = speed
+    }
+    return arr
+  }
+
+  def moveEnemies(enemies:Array[Enemy]):Unit = {
+    //gets The time
+    var milTimeNow:Long = System.currentTimeMillis()
+    //checks if this enemy hasn't moved for more than a certain value (in ms)
+    for(i<- enemies.indices){
+      if(milTimeNow - enemies(i).lastMoved > enemies(i).speed){
+        enemies(i).move()
+      }
+    }
+
+
+
+    //checks if the enemy has it the frog
+    if(grid(frog.x)(frog.y).isDangerous)gameOver()
   }
 }
