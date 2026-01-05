@@ -23,7 +23,7 @@ class Enemy (var x:Int, var y:Int, var direction:Boolean, var display:FunGraphic
       //changes the coordinates
       x-=1
       //checks if the ennemy is going outside the screen and making him go back at the beginning if it's the case
-      if(x<0){x = grid.length-1}
+      if(x < 0){x = grid.length-1}
       //making the current cell dangerous
       grid(x)(y).isDangerous = true
     }
@@ -31,7 +31,7 @@ class Enemy (var x:Int, var y:Int, var direction:Boolean, var display:FunGraphic
       grid(x)(y).isDangerous = false
       grid(x)(y).drawBackground()
       x+=1
-      if(x>0){x = 0}
+      if(x > grid.length-1){x = 0}
       grid(x)(y).isDangerous = true
     }
     //storing the coordinates

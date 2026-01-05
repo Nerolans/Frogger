@@ -68,17 +68,22 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     }
     display.setKeyManager(e)
     //creating the enemies "true" for left, "false" for right -> the number will probably be the same for each level just the speed and direction will change so we may need a function for this
-    var enemies:Array[Enemy] = createEnemies(5, true, 3, 250)
+    var enemies1:Array[Enemy] = createEnemies(5, true, 3, 500)
+    var enemies2:Array[Enemy] = createEnemies(3, false, 5, 250)
+    var enemies3:Array[Enemy] = createEnemies(7, true, 3, 500)
     //add others
 
 
 
     while(isOn){
-      moveEnemies(enemies)
+      moveEnemies(enemies1)
+      moveEnemies(enemies2)
+      moveEnemies(enemies3)
+      if(frog.isDead())gameOver()
     }
   }
 
-  //do something here when the frog and an ennemy came into contact
+  //do something here when the frog and an enemy came into contact
   def gameOver():Unit = {
     //do something here when frog is
     println("DEAD")
@@ -90,18 +95,17 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     isOn = false
 
   }
-  //to create the ennemies
 
+  //to create the ennemies
   def createEnemies(line:Int, direction:Boolean, distance:Int, speed:Int):Array[Enemy] = {
-    val pop: Int = sizeY / distance
+    val pop: Int = sizeX / distance
     val arr:Array[Enemy] = new Array[Enemy](pop)
     for(i<-0 until pop){
       if(direction){
-        //TOTEST
-        arr(i) = new Enemy(i*distance,5,direction,display,grid)
+        arr(i) = new Enemy((sizeX-1)-i*distance,line,direction,display,grid)
       }
       else{
-        arr(i) = new Enemy(sizeX-(i*distance),5,direction,display,grid)
+        arr(i) = new Enemy(i*distance,line,direction,display,grid)
       }
       arr(i).speed = speed
     }
