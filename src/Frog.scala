@@ -19,7 +19,7 @@ class Frog(var x:Int, var y:Int, var display:FunGraphics, var grid:Array[Array[C
 
   def moveForward():Unit = {
     //checks if the frog is not going outside the screen
-    if(y>0){
+    if(y>1){
       //the cell draws his background color over the frog (deletes the frog from the screen)
       grid(x)(y).drawBackground()
       //changing the coordinate of the frog
@@ -53,6 +53,12 @@ class Frog(var x:Int, var y:Int, var display:FunGraphics, var grid:Array[Array[C
       frogDirection = "frogD"
       draw(frogDirection)
     }
+  }
+  def reset():Unit = {
+    x = grid.length/2
+    y = grid(0).length-1
+    frogDirection = "frogW"
+    draw(frogDirection)
   }
   def isDead():Boolean = {
     if(grid(x)(y).isDangerous)true
