@@ -130,8 +130,8 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     for(i<-arr.indices){
       var speed:Int = baseSpeedCar-(Math.random()*150+20*level).toInt
       if(speed < 50)speed = 50
-      var distanceCar = 6-((Math.random()*1.5).toInt + level)
-      if (distanceCar < 2) distanceCar = 3 - (Math.random()*1.5).toInt
+      var distanceCar = 10-((Math.random()*1.5).toInt + level)
+      if (distanceCar < 3) distanceCar = 4 - (Math.random()*1.5).toInt
       println(distanceCar)
       println(speed)
       if (i%2 == 0){
