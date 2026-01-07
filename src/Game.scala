@@ -96,17 +96,22 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   }
 
   def play(): Unit = {
-    isOn = true
+    arrayOfCarEnnemies = groupCarsEnemies()
     createGrid()
     frog.reset()
-    groupCarsEnemies()
+    isOn = true
+    isRunning()
+  }
+  def isRunning():Unit = {
     while(isOn){
       for(i<-arrayOfCarEnnemies.indices){
         moveEnemies(arrayOfCarEnnemies(i))
       }
       if(frog.isDead())gameOver()
     }
+    play()
   }
+
 
   //do something here when the frog and an enemy came into contact
   def gameOver():Unit = {
@@ -116,25 +121,27 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   def victory():Unit = {
     //use when y == 0
     isOn = false
-    level += 1
-    frog.reset()
-    play()
+    level +=1
   }
 
-  def groupCarsEnemies():Unit = {
+  def groupCarsEnemies():Array[Array[Enemy]] = {
     //here you can manipulate the number of cars and all their parameters //number is fixed here //some setting will change because of the level
-    arrayOfCarEnnemies = new Array[Array[Enemy]](arrayOfCarEnnemies.length)
-    for(i<-arrayOfCarEnnemies.indices){
-      val speed:Int = baseSpeedCar-(Math.random()*150+20*level).toInt
-      val distanceCar = 6-(Math.random()*1.5).toInt * level
+    var arr = new Array[Array[Enemy]](5)
+    for(i<-arr.indices){
+      var speed:Int = baseSpeedCar-(Math.random()*150+20*level).toInt
+      if(speed < 50)speed = 50
+      var distanceCar = 6-((Math.random()*1.5).toInt + level)
+      if (distanceCar < 2) distanceCar = 3 - (Math.random()*1.5).toInt
       println(distanceCar)
+      println(speed)
       if (i%2 == 0){
-        arrayOfCarEnnemies(i) = createEnemies(8+i, true, distanceCar, speed)
+        arr(i) = createEnemies(8+i, true, distanceCar, speed)
       }
       else{
-        arrayOfCarEnnemies(i) = createEnemies(8+i, false, distanceCar, speed)
+        arr(i) = createEnemies(8+i, false, distanceCar, speed)
       }
     }
+    return arr
   }
   //to create the ennemies
   def createEnemies(line:Int, direction:Boolean, distance:Int, speed:Int):Array[Enemy] = {
