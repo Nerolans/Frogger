@@ -14,7 +14,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   //creating the Frog and drawing it at the Start
   var frog:Frog = new Frog(7,13,display, grid)
   //level TO USE FOR LATER (makes the enemies go faster the higher the level is) ///////////////////////////////////////////////////////////////////////
-  var level:Int = 10
+  var level:Int = 1
   //base speed for the car enemies
   val baseSpeedCar = 500
   //colors
@@ -114,7 +114,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     isOn = false
   }
   def victory():Unit = {
-   //use when y == 0
+    //use when y == 0
     isOn = false
     level += 1
     frog.reset()
@@ -125,14 +125,9 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     //here you can manipulate the number of cars and all their parameters //number is fixed here //some setting will change because of the level
     arrayOfCarEnnemies = new Array[Array[Enemy]](arrayOfCarEnnemies.length)
     for(i<-arrayOfCarEnnemies.indices){
-
-      var speed:Int = baseSpeedCar-(Math.random()*180+20*level).toInt
-      if(speed < 50) speed = 50
-      var distanceCar = 6-(Math.random()*1.5).toInt - level + 2
-      if(distanceCar < 3)distanceCar = 3 + (Math.random()*1.5).toInt
-
+      val speed:Int = baseSpeedCar-(Math.random()*150+20*level).toInt
+      val distanceCar = 6-(Math.random()*1.5).toInt * level
       println(distanceCar)
-      println(speed)
       if (i%2 == 0){
         arrayOfCarEnnemies(i) = createEnemies(8+i, true, distanceCar, speed)
       }
