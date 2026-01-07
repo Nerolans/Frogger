@@ -79,7 +79,8 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
         if(y == 1)grid(x)(y).backgroundColor = endLine
         //Water
         for(i<-8 to 12){
-          if(y == sizeY-i)grid(x)(y).backgroundColor = water
+          if(y == sizeY-i){grid(x)(y).backgroundColor = water
+            grid(x)(y).isDangerous = true }
         }
         //safe line
         if(y == sizeY-7)grid(x)(y).backgroundColor = safeLine
@@ -160,6 +161,23 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   }
 
   def moveEnemies(enemies:Array[Enemy]):Unit = {
+    //gets The time
+    var milTimeNow:Long = System.currentTimeMillis()
+    //checks if this enemy hasn't moved for more than a certain value (in ms)
+    if(milTimeNow - enemies(0).lastMoved > enemies(0).speed){
+      for(i<- enemies.indices){
+        enemies(i).move()
+      }
+    }
+  }
+  def createplatform(): Unit = {
+    var platform : Array[Enemy] = new Array[Enemy](3)
+    for(i <- 0 to 2){
+      platform(i)= new Enemy(i,6,true,display, grid)
+      platform(i).enemyPicture = new GraphicsBitmap("/platform.png")
+    }
+  }
+  def movePlatform(enemies:Array[Enemy]):Unit = {
     //gets The time
     var milTimeNow:Long = System.currentTimeMillis()
     //checks if this enemy hasn't moved for more than a certain value (in ms)
