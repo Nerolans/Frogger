@@ -1,15 +1,22 @@
 import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 
-class Enemy (var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics, var grid:Array[Array[Cell]]) {
+class movingObject(var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics, var grid:Array[Array[Cell]], var isEnnemy:Boolean) {
   //this stores the last time this enemy moved
   var lastMoved:Long = System.currentTimeMillis()
   //putting the sprite in a picture (just to have the picture preloaded)
-  var enemyPicture = new GraphicsBitmap("/enemyR.png")
+  var picMovingObject = new GraphicsBitmap("/placeholder.png")
   //changing the sprite if it's the other direction
   var speed:Int = 250
-  if(direction){
-    enemyPicture = new GraphicsBitmap("/enemyL.png")
+
+  if(isEnnemy == true){
+    if(direction) picMovingObject = new GraphicsBitmap("/enemyL.png")
+    else{
+      picMovingObject = new GraphicsBitmap("/enemyR.png")
+    }
+  }
+  else{
+    picMovingObject = new GraphicsBitmap("/wood.png")
   }
 
   //making the enemy go to the next Cell
@@ -37,7 +44,7 @@ class Enemy (var x:Int, var y:Int, var direction:Boolean, var display:FunGraphic
     //storing the coordinates
     val coordinates:Array[Int] = grid(x)(y).getCoordinatesMiddle()
     //drawing the enemy
-    display.drawPicture(coordinates(0), coordinates(1), enemyPicture)
+    display.drawPicture(coordinates(0), coordinates(1), picMovingObject)
     //changing the last time this enemy moved
     lastMoved = System.currentTimeMillis()
   }

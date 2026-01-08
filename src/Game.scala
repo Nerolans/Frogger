@@ -24,7 +24,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   var safeLine:Color = new Color(0,150,0)
   var road:Color = new Color(144,144,144)
   //number of enemy car
-  var arrayOfCarEnnemies:Array[Array[Enemy]] = new Array[Array[Enemy]](5)
+  var arrayOfCarEnnemies:Array[Array[movingObject]] = new Array[Array[movingObject]](5)
 
 
   //KEY LISTENER -> goes here whenever the keys listed under are typed
@@ -124,9 +124,9 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     level +=1
   }
 
-  def groupCarsEnemies():Array[Array[Enemy]] = {
+  def groupCarsEnemies():Array[Array[movingObject]] = {
     //here you can manipulate the number of cars and all their parameters //number is fixed here //some setting will change because of the level
-    var arr = new Array[Array[Enemy]](5)
+    var arr = new Array[Array[movingObject]](5)
     for(i<-arr.indices){
       var speed:Int = baseSpeedCar-(Math.random()*150+20*level).toInt
       if(speed < 50)speed = 50
@@ -144,22 +144,22 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     return arr
   }
   //to create the ennemies
-  def createEnemies(line:Int, direction:Boolean, distance:Int, speed:Int):Array[Enemy] = {
+  def createEnemies(line:Int, direction:Boolean, distance:Int, speed:Int):Array[movingObject] = {
     val pop: Int = sizeX / distance
-    val arr:Array[Enemy] = new Array[Enemy](pop)
+    val arr:Array[movingObject] = new Array[movingObject](pop)
     for(i<-0 until pop){
       if(direction){
-        arr(i) = new Enemy((sizeX-1)-i*distance,line,direction,display,grid)
+        arr(i) = new movingObject((sizeX-1)-i*distance,line,direction,display,grid,true)
       }
       else{
-        arr(i) = new Enemy(i*distance,line,direction,display,grid)
+        arr(i) = new movingObject(i*distance,line,direction,display,grid,true)
       }
       arr(i).speed = speed
     }
     return arr
   }
 
-  def moveEnemies(enemies:Array[Enemy]):Unit = {
+  def moveEnemies(enemies:Array[movingObject]):Unit = {
     //gets The time
     var milTimeNow:Long = System.currentTimeMillis()
     //checks if this enemy hasn't moved for more than a certain value (in ms)
