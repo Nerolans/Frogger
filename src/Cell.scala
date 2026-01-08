@@ -1,13 +1,18 @@
 import hevs.graphics.FunGraphics
+import hevs.graphics.utils.GraphicsBitmap
 
 import java.awt.Color
 
 class Cell (var x:Int, var y:Int, var size:Int, var display:FunGraphics){
   //checks the current state of the Cell (if an ennemy is on it or not)
-  var isDangerous:Boolean = false
+  var typeCell : String = "other"
   //bas color for the Cell (Black)
   var backgroundColor:Color = new Color(0,0,0)
 
+  def isDangerous():Boolean = {
+    if(typeCell == "water" || typeCell == "enemy"){true}
+    else{false}
+  }
   //returns the coordinates (x and y) for the top pixel of this Cell (used to draw the background)
   def getCoordinatesTopLeft():Array[Int] = {
     val xCoord:Int = x*size
@@ -30,5 +35,10 @@ class Cell (var x:Int, var y:Int, var size:Int, var display:FunGraphics){
     display.setColor(backgroundColor)
     //draws the rectangle (in this case a square)
     display.drawFillRect(coordinates(0),coordinates(1),size,size)
+    if(typeCell == "wood"){
+      val coordinates:Array[Int] = getCoordinatesMiddle()
+      display.drawPicture(coordinates(0), coordinates(1), new GraphicsBitmap("/wood.png"))
+    }
+
   }
 }

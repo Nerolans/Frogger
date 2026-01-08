@@ -8,9 +8,9 @@ class Frog(var x:Int, var y:Int, var display:FunGraphics, var grid:Array[Array[C
   var frogPicture:GraphicsBitmap = new GraphicsBitmap("/frogW.png")
 
   //draws the frog in the correct direction
-  def draw(direction:String):Unit = {
+  def draw():Unit = {
     //changing the sprite
-    frogPicture = new GraphicsBitmap("/"+direction+".png")
+    frogPicture = new GraphicsBitmap("/"+frogDirection+".png")
     //storing the coordinates
     val coordinates:Array[Int] = grid(x)(y).getCoordinatesMiddle()
     //drawing the frog
@@ -27,7 +27,6 @@ class Frog(var x:Int, var y:Int, var display:FunGraphics, var grid:Array[Array[C
       //changing the direction of the frog
       frogDirection = "frogW"
       //draws the frog at the new coordinates
-      draw(frogDirection)
     }
   }
   def moveBackward():Unit = {
@@ -35,7 +34,6 @@ class Frog(var x:Int, var y:Int, var display:FunGraphics, var grid:Array[Array[C
       grid(x)(y).drawBackground()
       y += 1
       frogDirection = "frogS"
-      draw(frogDirection)
     }
   }
   def moveLeft():Unit = {
@@ -43,7 +41,6 @@ class Frog(var x:Int, var y:Int, var display:FunGraphics, var grid:Array[Array[C
       grid(x)(y).drawBackground()
       x -= 1
       frogDirection = "frogA"
-      draw(frogDirection)
     }
   }
   def moveRight():Unit = {
@@ -51,19 +48,14 @@ class Frog(var x:Int, var y:Int, var display:FunGraphics, var grid:Array[Array[C
       grid(x)(y).drawBackground()
       x += 1
       frogDirection = "frogD"
-      draw(frogDirection)
     }
   }
-  def reset():Unit = {
-    x = grid.length/2
-    y = grid(0).length-1
-    frogDirection = "frogW"
-    draw(frogDirection)
+  def place(newX:Int, newY:Int):Unit = {
+    x = newX
+    y = newY
+    draw()
   }
   def isDead():Boolean = {
-    if(grid(x)(y).isDangerous)true
-    else{
-      false
-    }
+    grid(x)(y).isDangerous()
   }
 }

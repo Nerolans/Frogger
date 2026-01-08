@@ -16,7 +16,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   //level TO USE FOR LATER (makes the enemies go faster the higher the level is) ///////////////////////////////////////////////////////////////////////
   var level:Int = 1
   //base speed for the car enemies
-  val baseSpeedCar = 500
+  val baseSpeed = 500
   //colors
   var score:Color = new Color(0,0,0)
   var endLine:Color = new Color(218,112,214)
@@ -24,7 +24,8 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   var safeLine:Color = new Color(0,150,0)
   var road:Color = new Color(144,144,144)
   //number of enemy car
-  var arrayOfCarEnnemies:Array[Array[movingObject]] = new Array[Array[movingObject]](5)
+  var arrayOfCarEnnemies:Array[Array[Enemy]] = new Array[Array[Enemy]](5)
+  var arrayofplatform :Array[Array[Wood]] = new Array[Array[Wood]](5)
 
 
   //KEY LISTENER -> goes here whenever the keys listed under are typed
@@ -39,20 +40,24 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
       if(isReleased && isOn) {
         if (e.getKeyChar == 'w') {
           frog.moveForward()
+          frog.draw()
         }
         if (e.getKeyChar == 's') {
           frog.moveBackward()
+          frog.draw()
         }
         if (e.getKeyChar == 'a') {
           frog.moveLeft()
+          frog.draw()
         }
         if (e.getKeyChar == 'd') {
           frog.moveRight()
+          frog.draw()
         }
         //goes to false when the key is pressed
         isReleased = false
         //checks if the frog hit a car when he moved
-        if(grid(frog.x)(frog.y).isDangerous)gameOver()
+        if(grid(frog.x)(frog.y).isDangerous())gameOver()
         if(frog.y == 1)victory()
       }
     }
@@ -80,7 +85,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
         //Water
         for(i<-8 to 12){
           if(y == sizeY-i){grid(x)(y).backgroundColor = water
-            grid(x)(y).isDangerous = true }
+            grid(x)(y).typeCell = "water" }
         }
         //safe line
         if(y == sizeY-7)grid(x)(y).backgroundColor = safeLine
@@ -98,15 +103,20 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
 
   def play(): Unit = {
     arrayOfCarEnnemies = groupCarsEnemies()
+    arrayofplatform = groupPlatforms()
     createGrid()
-    frog.reset()
+    frog.frogDirection = "frogW"
+    frog.place(7,13)
     isOn = true
     isRunning()
   }
   def isRunning():Unit = {
     while(isOn){
       for(i<-arrayOfCarEnnemies.indices){
-        moveEnemies(arrayOfCarEnnemies(i))
+        moveEnemy(arrayOfCarEnnemies(i))
+      }
+      for(i<-arrayofplatform.indices){
+        moveWood(arrayofplatform(i))
       }
       if(frog.isDead())gameOver()
     }
@@ -125,16 +135,14 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     level +=1
   }
 
-  def groupCarsEnemies():Array[Array[movingObject]] = {
+  def groupCarsEnemies():Array[Array[Enemy]] = {
     //here you can manipulate the number of cars and all their parameters //number is fixed here //some setting will change because of the level
-    var arr = new Array[Array[movingObject]](5)
+    var arr = new Array[Array[Enemy]](5)
     for(i<-arr.indices){
-      var speed:Int = baseSpeedCar-(Math.random()*150+20*level).toInt
+      var speed:Int = baseSpeed-(Math.random()*150+20*level).toInt
       if(speed < 50)speed = 50
       var distanceCar = 10-((Math.random()*1.5).toInt + level)
       if (distanceCar < 3) distanceCar = 4 - (Math.random()*1.5).toInt
-      println(distanceCar)
-      println(speed)
       if (i%2 == 0){
         arr(i) = createEnemies(8+i, true, distanceCar, speed)
       }
@@ -144,46 +152,72 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     }
     return arr
   }
-  //to create the ennemies
-  def createEnemies(line:Int, direction:Boolean, distance:Int, speed:Int):Array[movingObject] = {
-    val pop: Int = sizeX / distance
-    val arr:Array[movingObject] = new Array[movingObject](pop)
-    for(i<-0 until pop){
-      if(direction){
-        arr(i) = new movingObject((sizeX-1)-i*distance,line,direction,display,grid,true)
+  def groupPlatforms():Array[Array[Wood]] = {
+    //here you can manipulate the number of cars and all their parameters //number is fixed here //some setting will change because of the level
+    var arr = new Array[Array[Wood]](5)
+    for(i<-arr.indices){
+      var speed:Int = baseSpeed-(Math.random()*150+20*level).toInt
+      if(speed < 50)speed = 50
+      var sizePlatform = 10-((Math.random()*1.5).toInt + level)
+      println(sizePlatform)
+      if (sizePlatform < 2) sizePlatform = 2 - (Math.random()*1.5).toInt
+      if (i%2 == 0){
+        arr(i) = createPlatform(2+i, true, sizePlatform, speed)
       }
       else{
-        arr(i) = new movingObject(i*distance,line,direction,display,grid,true)
+        arr(i) = createPlatform(2+i, false, sizePlatform, speed)
+      }
+    }
+    return arr
+  }
+  //to create the ennemies
+  def createEnemies(line:Int, direction:Boolean, distance:Int, speed:Int):Array[Enemy] = {
+    val pop: Int = sizeX / distance
+    val arr:Array[Enemy] = new Array[Enemy](pop)
+    for(i<-0 until pop){
+      if(direction){
+        arr(i) = new Enemy((sizeX-1)-i*distance,line,direction,display,grid)
+      }
+      else{
+        arr(i) = new Enemy(i*distance,line,direction,display,grid)
       }
       arr(i).speed = speed
     }
     return arr
   }
 
-  def moveEnemies(enemies:Array[movingObject]):Unit = {
+  def createPlatform(line:Int, direction:Boolean, size:Int, speed:Int): Array[Wood] = {
+    var platform : Array[Wood] = new Array[Wood](size)
+    for(i <- 0 until size){
+      if(direction) {
+        platform(i) = new Wood(i, line, direction, display, grid)
+      }
+      else{
+        platform(i) = new Wood(i+4, line, direction, display, grid)
+      }
+      platform(i).speed = speed
+    }
+    platform
+  }
+
+  def moveEnemy(objects:Array[Enemy]):Unit = {
     //gets The time
     var milTimeNow:Long = System.currentTimeMillis()
     //checks if this enemy hasn't moved for more than a certain value (in ms)
-    if(milTimeNow - enemies(0).lastMoved > enemies(0).speed){
-      for(i<- enemies.indices){
-        enemies(i).move()
+    if(milTimeNow - objects(0).lastMoved > objects(0).speed){
+      for(i<- objects.indices){
+        objects(i).move()
       }
     }
   }
-  def createplatform(): Unit = {
-    var platform : Array[Enemy] = new Array[Enemy](3)
-    for(i <- 0 to 2){
-      platform(i)= new Enemy(i,6,true,display, grid)
-      platform(i).enemyPicture = new GraphicsBitmap("/platform.png")
-    }
-  }
-  def movePlatform(enemies:Array[Enemy]):Unit = {
+
+  def moveWood(objects:Array[Wood]):Unit = {
     //gets The time
     var milTimeNow:Long = System.currentTimeMillis()
     //checks if this enemy hasn't moved for more than a certain value (in ms)
-    if(milTimeNow - enemies(0).lastMoved > enemies(0).speed){
-      for(i<- enemies.indices){
-        enemies(i).move()
+    if(milTimeNow - objects(0).lastMoved > objects(0).speed){
+      for(i<- objects.indices){
+        objects(i).move(frog)
       }
     }
   }
