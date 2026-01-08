@@ -110,6 +110,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     isOn = true
     isRunning()
   }
+
   def isRunning():Unit = {
     while(isOn){
       for(i<-arrayOfCarEnnemies.indices){

@@ -8,7 +8,7 @@ class Wood(var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics,
   var picMovingObject = new GraphicsBitmap("/wood.png")
   //changing the sprite if it's the other direction
   var speed:Int = 250
-  var actualX = x
+  var actualX = 0
 
   def checkFrog(frog: Frog):Unit = {
     if(frog.x == x && frog.y == y){
@@ -32,40 +32,30 @@ class Wood(var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics,
 
   def move(frog: Frog):Unit = {
     actualX = x
+    var futureX = 0
+    var oldX = 0
+
     if (direction){
-      var newX = x-1
-      var oldX = x+1
-      if(x-1 < 0) newX = grid.length-1
+      futureX = x-1
+      oldX = x+1
+      if(x-1 < 0) futureX = grid.length-1
       if(x+1 > grid.length-1) oldX = 0
-      if(grid(newX)(y).typeCell == "water"){
-        grid(newX)(y).typeCell = "wood"
-        grid(newX)(y).drawBackground()
-      }
-      if(grid(oldX)(y).typeCell == "water") {
-        grid(x)(y).typeCell = "water"
-        grid(x)(y).drawBackground()
-      }
-      x = newX
     }
     else {
-      var newX = x+1
-      var oldX = x-1
+      futureX = x+1
+      oldX = x-1
       if(x-1 < 0) oldX = grid.length-1
-      if(x+1 > grid.length-1) newX = 0
-      if(grid(newX)(y).typeCell == "water"){
-        grid(newX)(y).typeCell = "wood"
-        grid(newX)(y).drawBackground()
-      }
-      if(grid(oldX)(y).typeCell == "water") {
-        grid(x)(y).typeCell = "water"
-        grid(x)(y).drawBackground()
-      }
-      x = newX
+      if(x+1 > grid.length-1) futureX = 0
     }
-    if(y == 3){
-      println(x +"  "+y)
-      println(grid(x)(y).typeCell)
+
+    if(grid(oldX)(y).typeCell == "water") {
+      grid(x)(y).typeCell = "water"
+      grid(x)(y).drawBackground()
     }
+
+    x = futureX
+    grid(x)(y).typeCell = "wood"
+    grid(x)(y).drawBackground()
     checkFrog(frog)
     //changing the last time this enemy moved
     lastMoved = System.currentTimeMillis()
