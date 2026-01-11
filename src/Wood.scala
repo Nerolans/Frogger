@@ -42,10 +42,10 @@ class Wood(var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics,
       if(x+1 > grid.length-1) oldX = 0
     }
     else {
-      futureX = x+1
-      oldX = x-1
+      futureX = x + 1
+      oldX = x - 1
       if(x-1 < 0) oldX = grid.length-1
-      if(x+1 > grid.length-1) futureX = 0
+      if(x + 1 > grid.length-1) futureX = 0
     }
 
     if(grid(oldX)(y).typeCell == "water") {
