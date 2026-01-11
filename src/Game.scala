@@ -1,7 +1,7 @@
 import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 
-import java.awt.Color
+import java.awt.{Color, Font}
 import java.awt.event.{KeyEvent, KeyListener}
 
 class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell:Int) {
@@ -15,6 +15,8 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   var frog:Frog = new Frog(7,13,display, grid)
   //level TO USE FOR LATER (makes the enemies go faster the higher the level is) ///////////////////////////////////////////////////////////////////////
   var level:Int = 1
+  //number of lives for the player
+  var lives:Int = 5
   //base speed for the car enemies
   val baseSpeed = 500
   //colors
@@ -69,9 +71,6 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   }
   display.setKeyManager(e)
 
-
-
-
   def createGrid():Unit = {
     //creating each Cell inside the grid
     for(x<-0 until sizeX){
@@ -101,14 +100,31 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     }
   }
 
+  def renderScore():Unit = {
+    var coord = grid(0)(0).getCoordinatesMiddle()
+    display.drawFancyString(coord(0),coord(1)+6,level.toString,Color.WHITE,30)
+    for(i<-0 until lives){
+      coord = grid(sizeX-i-1)(0).getCoordinatesMiddle()
+      var pic = new GraphicsBitmap("/hearth.png")
+      display.drawPicture(coord(0), coord(1), pic)
+    }
+  }
+
   def play(): Unit = {
-    arrayOfCarEnnemies = groupCarsEnemies()
-    arrayofplatform = groupPlatforms()
-    createGrid()
-    frog.frogDirection = "frogW"
-    frog.place(7,13)
-    isOn = true
-    isRunning()
+    if(lives > 0) {
+      Thread.sleep(300)
+      createGrid()
+      arrayOfCarEnnemies = groupCarsEnemies()
+      arrayofplatform = groupPlatforms()
+      frog.frogDirection = "frogW"
+      frog.place(7, 13)
+      renderScore()
+      isOn = true
+      isRunning()
+    }
+    else {
+      //Gameoverscreen here
+    }
   }
 
   def isRunning():Unit = {
@@ -128,7 +144,9 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   //do something here when the frog and an enemy came into contact
   def gameOver():Unit = {
     //do something here when frog is dead
+    if(isOn)lives -= 1
     isOn = false
+    frog.isDead()
   }
   def victory():Unit = {
     //use when y == 0
@@ -160,8 +178,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
       var speed:Int = baseSpeed-(Math.random()*150+20*level).toInt
       if(speed < 50)speed = 50
       var sizePlatform = 10-((Math.random()*1.5).toInt + level)
-      println(sizePlatform)
-      if (sizePlatform < 2) sizePlatform = 2 - (Math.random()*1.5).toInt
+      if (sizePlatform < 2) sizePlatform = 3 - (Math.random()*1.5).toInt
       if (i%2 == 0){
         arr(i) = createPlatform(2+i, true, sizePlatform, speed)
       }
@@ -191,10 +208,14 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     var platform : Array[Wood] = new Array[Wood](size)
     for(i <- 0 until size){
       if(direction) {
-        platform(i) = new Wood(i, line, direction, display, grid)
+        platform(i) = new Wood(i, line, true, display, grid)
+        grid(i)(line).typeCell = "wood"
+        grid(i)(line).drawBackground()
       }
       else{
-        platform(i) = new Wood(i+4, line, direction, display, grid)
+        platform(i) = new Wood(i, line, false, display, grid)
+        grid(i)(line).typeCell = "wood"
+        grid(i)(line).drawBackground()
       }
       platform(i).speed = speed
     }
@@ -217,8 +238,15 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     var milTimeNow:Long = System.currentTimeMillis()
     //checks if this enemy hasn't moved for more than a certain value (in ms)
     if(milTimeNow - objects(0).lastMoved > objects(0).speed){
-      for(i<- objects.indices){
-        objects(i).move(frog)
+      if(objects(0).direction){
+        for(i<- objects.indices){
+          objects(i).move(frog)
+        }
+      }
+      else {
+        for (i <- objects.length - 1 to 0 by -1) {
+          objects(i).move(frog)
+        }
       }
     }
   }

@@ -17,11 +17,13 @@ class Wood(var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics,
     if(frog.x == actualX && frog.y == y){
       var directionNew:String = frog.frogDirection
       if(direction){
+        grid(actualX)(y).drawBackground()
         frog.moveLeft()
         frog.frogDirection = directionNew
         frog.draw()
       }
       else {
+        grid(actualX)(y).drawBackground()
         frog.moveRight()
         frog.frogDirection = directionNew
         frog.draw()
@@ -35,17 +37,18 @@ class Wood(var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics,
     var futureX = 0
     var oldX = 0
 
+    //seems to be okay
     if (direction){
       futureX = x-1
       oldX = x+1
-      if(x-1 < 0) futureX = grid.length-1
-      if(x+1 > grid.length-1) oldX = 0
+      if(futureX < 0) futureX = grid.length-1
+      if(oldX > grid.length-1) oldX = 0
     }
     else {
-      futureX = x + 1
-      oldX = x - 1
-      if(x-1 < 0) oldX = grid.length-1
-      if(x + 1 > grid.length-1) futureX = 0
+      futureX = x+1
+      oldX = x-1
+      if(oldX < 0) oldX = grid.length-1
+      if(futureX > grid.length-1) futureX = 0
     }
 
     if(grid(oldX)(y).typeCell == "water") {
@@ -54,8 +57,11 @@ class Wood(var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics,
     }
 
     x = futureX
-    grid(x)(y).typeCell = "wood"
-    grid(x)(y).drawBackground()
+    if(grid(x)(y).typeCell != "wood"){
+      grid(x)(y).typeCell = "wood"
+      grid(x)(y).drawBackground()
+    }
+
     checkFrog(frog)
     //changing the last time this enemy moved
     lastMoved = System.currentTimeMillis()
