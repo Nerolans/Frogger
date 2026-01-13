@@ -18,6 +18,8 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   //number of lives for the player
   var lives:Int = 5
   //base speed for the car enemies
+  var game_over: String = "you lost !"
+  var restart_message:String = "Press space to restart"
   val baseSpeed = 500
   //colors
   var score:Color = new Color(0,0,0)
@@ -124,6 +126,10 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     }
     else {
       //Gameoverscreen here
+      display.drawFancyString(310,300,game_over,Color.BLACK,40)
+      display.drawFancyString(200,375,restart_message,Color.BLACK,40)
+
+
     }
   }
 
