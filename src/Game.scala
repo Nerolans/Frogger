@@ -109,7 +109,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
       display.drawPicture(coord(0), coord(1), pic)
     }
   }
-
+//method to start a game
   def play(): Unit = {
     if(lives > 0) {
       Thread.sleep(300)
