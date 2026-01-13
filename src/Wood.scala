@@ -9,7 +9,7 @@ class Wood(var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics,
   //changing the sprite if it's the other direction
   var speed:Int = 250
   var actualX = 0
-
+//method to check if the frog is on the wood
   def checkFrog(frog: Frog):Unit = {
     if(frog.x == x && frog.y == y){
       frog.draw()
@@ -31,7 +31,7 @@ class Wood(var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics,
     }
   }
 
-
+//method to move the wood and that the wood appear in the other side on the screen
   def move(frog: Frog):Unit = {
     actualX = x
     var futureX = 0
