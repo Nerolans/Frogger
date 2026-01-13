@@ -207,7 +207,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   def createPlatform(line:Int, direction:Boolean, size:Int, speed:Int): Array[Wood] = {
     var platform : Array[Wood] = new Array[Wood](size)
     for(i <- 0 until size){
-     // we create the platorm depending of their direction
+     // we create the platorm depending on what are their direction
       if(direction) {
       // direction left
         platform(i) = new Wood(i, line, true, display, grid)
