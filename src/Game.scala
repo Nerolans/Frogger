@@ -16,7 +16,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   //level TO USE FOR LATER (makes the enemies go faster the higher the level is) ///////////////////////////////////////////////////////////////////////
   var level:Int = 1
   //number of lives for the player
-  var lives:Int = 1
+  var lives:Int = 5
   //base speed for the car enemies
   var game_over: String = "you lost !"
   var restart_message:String = "Press space to restart"
