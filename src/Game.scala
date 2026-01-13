@@ -203,16 +203,19 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     }
     return arr
   }
-
+// method to create the platform on water
   def createPlatform(line:Int, direction:Boolean, size:Int, speed:Int): Array[Wood] = {
     var platform : Array[Wood] = new Array[Wood](size)
     for(i <- 0 until size){
+     // we create the platorm depending of their direction
       if(direction) {
+      // direction left
         platform(i) = new Wood(i, line, true, display, grid)
         grid(i)(line).typeCell = "wood"
         grid(i)(line).drawBackground()
       }
       else{
+      // direction right
         platform(i) = new Wood(i, line, false, display, grid)
         grid(i)(line).typeCell = "wood"
         grid(i)(line).drawBackground()
@@ -232,7 +235,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
       }
     }
   }
-
+  //method to move the platform on the water
   def moveWood(objects:Array[Wood]):Unit = {
     //gets The time
     var milTimeNow:Long = System.currentTimeMillis()
