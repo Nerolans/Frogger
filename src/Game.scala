@@ -16,10 +16,11 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   //level TO USE FOR LATER (makes the enemies go faster the higher the level is) ///////////////////////////////////////////////////////////////////////
   var level:Int = 1
   //number of lives for the player
-  var lives:Int = 5
+  var lives:Int = 1
   //base speed for the car enemies
   var game_over: String = "you lost !"
   var restart_message:String = "Press space to restart"
+  var play_again : Boolean = false
   val baseSpeed = 500
   //colors
   var score:Color = new Color(0,0,0)
@@ -33,6 +34,25 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
 
 
   //KEY LISTENER -> goes here whenever the keys listed under are typed
+  def yes_or_no():Boolean ={
+  play_again
+  }
+  var a: KeyListener = new KeyListener {
+    override def keyTyped(a: KeyEvent): Unit = {
+    }
+
+    override def keyPressed(a: KeyEvent): Unit = {
+      if (a.getKeyChar == ' ') {
+        println("vous avez relançé une partie")
+        play_again = true
+      }
+    }
+
+    override def keyReleased(a: KeyEvent): Unit = {
+
+    }
+  }
+  display.setKeyManager(a)
   var e:KeyListener = new KeyListener {
     override def keyTyped(e: KeyEvent): Unit = {
     }
