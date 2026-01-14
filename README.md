@@ -1,3 +1,9 @@
+1)**GAME INSTALLATION**
+To install The game you'll need to have intelliJ installed and follow these steps as shown in this video:
+([/www.youtube.com/watch?v=bN8SZW8KxN8](https://www.youtube.com/watch?v=bN8SZW8KxN8))
+
+
+
 1) Frogger is an old platforming arcade game , the goal is to reach the end of the map by dodging the cars and jump on wood to pass a river we used the original
  as a reference but we add randomness like the random speed of the car and the wood and the distance between them. When you passed the finished line the level increment
  and the number of car increase and the number of wood you can pass on decrease (the difficulty level in genral increase).
@@ -13,5 +19,7 @@
   - To pass the river you need to walk on the wooden logs and make your path to the finished line
   - Walking on the water or being hit by a car makes you die and lose 1 life (you have 5 at the beginning of the game)
   - When you use your 5 lives and you lost you have 3 seconde to press "space" to play again if you want to do another game
+
+
      
      
