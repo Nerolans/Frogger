@@ -1,5 +1,5 @@
-1) **GAME INSTALLATION**
-To install The game you'll need to have intelliJ installed and follow these steps as shown in this video:
+1) **GAME INSTALLATION**\
+To install The game you'll need to have intelliJ installed and follow these steps as shown in this video:\
 [![Watch the video](https://img.youtube.com/vi/bN8SZW8KxN8/maxresdefault.jpg)](https://www.youtube.com/watch?v=bN8SZW8KxN8)
 
 
