@@ -1,6 +1,6 @@
 1) **GAME INSTALLATION**
 To install The game you'll need to have intelliJ installed and follow these steps as shown in this video:
-([[![Watch the video](https://i.sstatic.net/Vp2cE.png)]([https://youtu.be/vt5fpE0bzSY](https://www.youtube.com/watch?v=bN8SZW8KxN8))]
+([[![Watch the video](https://img.youtube.com/vi/vt5fpE0bzSY/maxresdefault.jpg)]([https://youtu.be/vt5fpE0bzSY](https://www.youtube.com/watch?v=bN8SZW8KxN8))]
 
 
 
