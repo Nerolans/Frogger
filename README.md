@@ -22,7 +22,7 @@ Congrats you're now able to launch the Game !
 
 **GAME DESCRIPTION**\
  Frogger is an old platforming arcade game , the goal is to reach the end of the map by dodging the cars and jump on wood to pass a river.\
- We used the original as a reference but we added randomness like the speed of the cars, the wooden logs as well as the distance between them. When you passed the finished line the level goes up by 1, the number of car increases and the number of wood you can walk on decreases (the difficulty level in general increases).
+ We used the original as a reference but we added randomness like the speed of the cars, the wooden logs as well as the distance between them. When you passed the finished line the level goes up by 1, the number of car increases and the number of logs you can walk on decreases (the difficulty level in general increases).
 
 This is the first level
 <img width="500" height="1000" alt="image" src="https://github.com/user-attachments/assets/2020a706-0e9a-4a67-a57f-d31a06559120" /> 
