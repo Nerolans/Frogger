@@ -8,9 +8,10 @@
 
 
 
-3) - You can control the Frog with W/A/S/D
-   - To pass the river you need to walk on the wooden logs and make your path to the finished line
-   - Walking on the water or being hit by a car makes you die and lose 1 life (you have 5 at the beginning of the game)
-   - When you use your 5 lives and you lost you have 3 seconde to press "space" to play again if you want to do another game
+3)  GAMEPLAY:
+  - You can control the Frog with W/A/S/D
+  - To pass the river you need to walk on the wooden logs and make your path to the finished line
+  - Walking on the water or being hit by a car makes you die and lose 1 life (you have 5 at the beginning of the game)
+  - When you use your 5 lives and you lost you have 3 seconde to press "space" to play again if you want to do another game
      
      
