@@ -14,13 +14,16 @@ object Main extends App{
 
   //creating the game and launching it
   do{
+    println("vous avez relançé une partie")
     var game1: Game = new Game(GRAPHICS_WIDTH / sizeCell, GRAPHICS_HEIGHT / sizeCell, display, sizeCell)
     game1.play()
+    //wait for the user to input if he wants to restart a new game or not
     Thread.sleep(3000)
-    if(game1.yes_or_no()== true){restart=true}
+    if(game1.yes_or_no()){restart=true}
     else{restart = false}
   }
-  while(restart == true)
+  while(restart)
+  display.clear()
 
 
 

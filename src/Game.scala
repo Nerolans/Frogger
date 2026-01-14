@@ -43,7 +43,6 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
 
     override def keyPressed(a: KeyEvent): Unit = {
       if (a.getKeyChar == ' ') {
-        println("vous avez relançé une partie")
         play_again = true
       }
     }
@@ -122,6 +121,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     }
   }
 
+  //draws the level and the lives of the player at the top
   def renderScore():Unit = {
     var coord = grid(0)(0).getCoordinatesMiddle()
     display.drawFancyString(coord(0),coord(1)+6,level.toString,Color.WHITE,30)
@@ -131,17 +131,25 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
       display.drawPicture(coord(0), coord(1), pic)
     }
   }
-//method to start a game
+//method to play a level
   def play(): Unit = {
     if(lives > 0) {
+      //little pause here to breath
       Thread.sleep(300)
+      //redraws every cell
       createGrid()
+      //draw a new set of ennemies
       arrayOfCarEnnemies = groupCarsEnemies()
+      //draw a new set of wooden platform
       arrayofplatform = groupPlatforms()
+      //reset the direction of the frog and place it at the start
       frog.frogDirection = "frogW"
       frog.place(7, 13)
+      //draws the new score (either new level or a life lost)
       renderScore()
+      //putting the var used for the while back to on
       isOn = true
+      //launching the movement
       isRunning()
     }
     else {
@@ -154,16 +162,21 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     }
   }
 
+  //run the movements of the enemies and wooden platforms
   def isRunning():Unit = {
     while(isOn){
+      //checks the movement for every line of enemies
       for(i<-arrayOfCarEnnemies.indices){
         moveEnemy(arrayOfCarEnnemies(i))
       }
+      //does the same here for the platform
       for(i<-arrayofplatform.indices){
         moveWood(arrayofplatform(i))
       }
+      //checks if a car has hit a non-moving frog
       if(frog.isDead())gameOver()
     }
+    //goes back to the play function if the level has ended
     play()
   }
 
@@ -173,7 +186,6 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     //do something here when frog is dead
     if(isOn)lives -= 1
     isOn = false
-    frog.isDead()
   }
   def victory():Unit = {
     //use when y == 0
@@ -184,11 +196,17 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   def groupCarsEnemies():Array[Array[Enemy]] = {
     //here you can manipulate the number of cars and all their parameters //number is fixed here //some setting will change because of the level
     var arr = new Array[Array[Enemy]](5)
+    //create group of lines of enemies
     for(i<-arr.indices){
+      //speed is changed here
       var speed:Int = baseSpeed-(Math.random()*150+20*level).toInt
+      //is making it so that the speed is at a minimum
       if(speed < 50)speed = 50
+      //diminishes the distance between the cars after each level
       var distanceCar = 10-((Math.random()*1.5).toInt + level)
+      //minimum
       if (distanceCar < 3) distanceCar = 4 - (Math.random()*1.5).toInt
+      //each line has a different direction
       if (i%2 == 0){
         arr(i) = createEnemies(8+i, true, distanceCar, speed)
       }
@@ -201,6 +219,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
   def groupPlatforms():Array[Array[Wood]] = {
     //here you can manipulate the number of cars and all their parameters //number is fixed here //some setting will change because of the level
     var arr = new Array[Array[Wood]](5)
+    //same thing as the enemies but for the wooden platform
     for(i<-arr.indices){
       var speed:Int = baseSpeed-(Math.random()*150+20*level).toInt
       if(speed < 50)speed = 50
@@ -215,10 +234,12 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
     }
     return arr
   }
-  //to create the ennemies
+  //to create each line of enemies
   def createEnemies(line:Int, direction:Boolean, distance:Int, speed:Int):Array[Enemy] = {
+    //calculates how many car will spawn per line
     val pop: Int = sizeX / distance
     val arr:Array[Enemy] = new Array[Enemy](pop)
+    //creates the enemy car here
     for(i<-0 until pop){
       if(direction){
         arr(i) = new Enemy((sizeX-1)-i*distance,line,direction,display,grid)
@@ -273,6 +294,7 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
           objects(i).move(frog)
         }
       }
+        //gives the array in upside down because it's going the other direction
       else {
         for (i <- objects.length - 1 to 0 by -1) {
           objects(i).move(frog)

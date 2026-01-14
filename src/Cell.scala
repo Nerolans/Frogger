@@ -35,6 +35,7 @@ class Cell (var x:Int, var y:Int, var size:Int, var display:FunGraphics){
     display.setColor(backgroundColor)
     //draws the rectangle (in this case a square)
     display.drawFillRect(coordinates(0),coordinates(1),size,size)
+    //adds the wood picture if a wooden platform is present
     if(typeCell == "wood"){
       val coordinates:Array[Int] = getCoordinatesMiddle()
       display.drawPicture(coordinates(0), coordinates(1), new GraphicsBitmap("/wood.png"))

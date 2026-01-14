@@ -9,7 +9,7 @@ class Wood(var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics,
   //changing the sprite if it's the other direction
   var speed:Int = 250
   var actualX = 0
-//method to check if the frog is on the wood
+//method to check if the frog is on the wood and moves the frog with the wood if it's the case
   def checkFrog(frog: Frog):Unit = {
     if(frog.x == x && frog.y == y){
       frog.draw()
@@ -37,31 +37,40 @@ class Wood(var x:Int, var y:Int, var direction:Boolean, var display:FunGraphics,
     var futureX = 0
     var oldX = 0
 
-    //seems to be okay
+    //check if it's going right to left
     if (direction){
+      //next cell
       futureX = x-1
+      //old cell
       oldX = x+1
+      //if it reaches the end of the screen
       if(futureX < 0) futureX = grid.length-1
+      //if it's at the last cell of the screen
       if(oldX > grid.length-1) oldX = 0
     }
     else {
+      //same thing but for the other direction
       futureX = x+1
       oldX = x-1
       if(oldX < 0) oldX = grid.length-1
       if(futureX > grid.length-1) futureX = 0
     }
 
+    //if the last cell ws water the actual is going to become water too
     if(grid(oldX)(y).typeCell == "water") {
       grid(x)(y).typeCell = "water"
       grid(x)(y).drawBackground()
     }
 
+    //changes the actual coordinates for the next one
     x = futureX
+    //make it so the program doesn't redraw the platform if it already exists (in the middle of the platform)
     if(grid(x)(y).typeCell != "wood"){
       grid(x)(y).typeCell = "wood"
       grid(x)(y).drawBackground()
     }
 
+    //checks if the frog is on the platform
     checkFrog(frog)
     //changing the last time this enemy moved
     lastMoved = System.currentTimeMillis()
