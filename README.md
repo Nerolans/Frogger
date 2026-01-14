@@ -31,8 +31,8 @@ This is the first level and the seventh to compare\
 
 
 
-
-\**GAMEPLAY**
+\
+**GAMEPLAY**
   - You can control the Frog with W/A/S/D
   - To pass the river you need to walk on the wooden logs and make your way to the finished line
   - Walking on the water or being hit by a car makes you die and lose 1 life (you have 5 at the beginning of the game)
