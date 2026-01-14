@@ -1,6 +1,22 @@
-1) **GAME INSTALLATION**\
+**GAME INSTALLATION**\
 To install The game you'll need to have intelliJ installed and follow these steps as shown in this video:\
 [![Watch the video](https://img.youtube.com/vi/bN8SZW8KxN8/maxresdefault.jpg)](https://www.youtube.com/watch?v=bN8SZW8KxN8)
+\
+\
+If you can't see the video follow these steps:\
+- Download the Project as a zip from the repository
+- Extract it and open it as a project on intelliJ\\
+The next few steps are mandatory if you want to be able to be able to launch the game:\
+- go in the project structure
+- add a new module
+- click on scala, choose the project and make sure to disable the "add sample code" setting
+- go back on the project
+- add fungraphic as a library
+- right click on the "res" folder and mark it at the ressouce root folder
+
+\Congrats you're now able to launch the Game !
+
+  
 
 
 
