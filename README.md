@@ -25,9 +25,9 @@ Congrats you're now able to launch the Game !
  We used the original as a reference but we added randomness like the speed of the cars, the wooden logs as well as the distance between them. When you passed the finished line the level goes up by 1, the number of car increases and the number of logs you can walk on decreases (the difficulty level in general increases).
 
 This is the first level\
-<img width="500" height="1000" alt="image" src="https://github.com/user-attachments/assets/2020a706-0e9a-4a67-a57f-d31a06559120" /> 
-\
-\This is a bit further up the levels
+<img width="500" height="1000" alt="image" src="https://github.com/user-attachments/assets/2020a706-0e9a-4a67-a57f-d31a06559120" />\
+
+This is a bit further up the levels
 <img width="500" height="1000" alt="Capture d&#39;écran 2026-01-14 091517" src="https://github.com/user-attachments/assets/b841e6cc-c1c0-4b2d-9657-ed4555688fac" />
 
 
