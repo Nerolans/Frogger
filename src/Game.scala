@@ -157,8 +157,6 @@ class Game (var sizeX:Int, var sizeY:Int, var display:FunGraphics,var sizeOfcell
       var coordinateMiddle : Array[Int] = grid(sizeX/2-3)(sizeY/2).getCoordinatesMiddle()
       display.drawFancyString(coordinateMiddle(0)+100,coordinateMiddle(1),game_over,Color.BLACK,40)
       display.drawFancyString(coordinateMiddle(0)-35,coordinateMiddle(1)+50,restart_message,Color.BLACK,40)
-
-
     }
   }
 
